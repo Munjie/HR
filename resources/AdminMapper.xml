@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mwj.mapper.AdminMapper" >
+  <resultMap id="BaseResultMap" type="com.mwj.bean.Admin" >
+    <result column="ADMINNAME" property="adminname" jdbcType="VARCHAR" />
+    <result column="ADMINPWD" property="adminpwd" jdbcType="VARCHAR" />
+    <result column="ADMINLEVEL" property="adminlevel" jdbcType="DECIMAL" />
+  </resultMap>
+
+  <select id="login" resultType="java.lang.Integer">
+    select COUNT (1)
+    from ADMIN
+    where Adminname =#{adminname}
+    AND  Adminpwd = #{adminpwd}
+    AND Adminlevel = #{adminlevel}
+  </select>
+</mapper>

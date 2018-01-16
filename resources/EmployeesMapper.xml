@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mwj.mapper.EmployeesMapper" >
+
+
+
+  <select id="displayEmp" resultType="java.util.Map" >
+
+ SELECT emp.employee_id,emp.emp_name,emp.email,emp.phone_number,emp.hire_date,jo.job_title,emp.salary,de.department_name
+ FROM employees emp  JOIN jobs jo ON emp.job_id = jo.job_id
+ JOIN departments de ON de.department_id = emp.department_id
+
+   </select>
+
+    <insert id="addEmp" parameterType="com.mwj.bean.Employees" >
+
+  insert into EMPLOYEES (employee_id, EMP_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, DEPARTMENT_ID)
+  values (employee_seq.nextval, #{empName},#{email},#{phoneNumber}, #{hireDate}, #{jobId},  #{salary}, #{departmentId})
+    </insert>
+
+    <delete id="deleteEmp" parameterType="java.lang.Integer">
+        DELETE  FROM  employees where employee_id = #{employeeId}
+    </delete>
+
+    <update id="updateEmp" parameterType="com.mwj.bean.Employees" >
+        update EMPLOYEES
+        set EMP_NAME = #{empName,jdbcType=VARCHAR},
+        EMAIL = #{email,jdbcType=VARCHAR},
+        PHONE_NUMBER = #{phoneNumber,jdbcType=VARCHAR},
+        HIRE_DATE = #{hireDate,jdbcType=TIMESTAMP},
+        JOB_ID = #{jobId,jdbcType=VARCHAR},
+        SALARY = #{salary,jdbcType=DECIMAL},
+        DEPARTMENT_ID = #{departmentId,jdbcType=DECIMAL}
+        where EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL}
+    </update>
+</mapper>

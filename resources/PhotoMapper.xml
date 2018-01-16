@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mwj.mapper.PhotoMapper" >
+  <resultMap id="BaseResultMap" type="com.mwj.bean.Photo" >
+    <id column="PHOTO_ID" property="photoId" jdbcType="DECIMAL" />
+    <result column="PHOTO_PATH" property="photoPath" jdbcType="VARCHAR" />
+    <result column="EMPLOYEE_ID" property="employeeId" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PHOTO_ID, PHOTO_PATH, EMPLOYEE_ID
+  </sql>
+  <select id="shwoPhoto" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    *
+    from PHOTO
+    where PHOTO_ID = #{employeeId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from PHOTO
+    where PHOTO_ID = #{photoId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.mwj.bean.Photo" >
+    insert into PHOTO (PHOTO_ID, PHOTO_PATH, EMPLOYEE_ID
+      )
+    values (#{photoId,jdbcType=DECIMAL}, #{photoPath,jdbcType=VARCHAR}, #{employeeId,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mwj.bean.Photo" >
+    insert into PHOTO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="photoId != null" >
+        PHOTO_ID,
+      </if>
+      <if test="photoPath != null" >
+        PHOTO_PATH,
+      </if>
+      <if test="employeeId != null" >
+        EMPLOYEE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="photoId != null" >
+        #{photoId,jdbcType=DECIMAL},
+      </if>
+      <if test="photoPath != null" >
+        #{photoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null" >
+        #{employeeId,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mwj.bean.Photo" >
+    update PHOTO
+    <set >
+      <if test="photoPath != null" >
+        PHOTO_PATH = #{photoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null" >
+        EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where PHOTO_ID = #{photoId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mwj.bean.Photo" >
+    update PHOTO
+    set PHOTO_PATH = #{photoPath,jdbcType=VARCHAR},
+      EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL}
+    where PHOTO_ID = #{photoId,jdbcType=DECIMAL}
+  </update>
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mwj.mapper.JobsMapper" >
+  <resultMap id="BaseResultMap" type="com.mwj.bean.Jobs" >
+    <id column="JOB_ID" property="jobId" jdbcType="VARCHAR" />
+    <result column="JOB_TITLE" property="jobTitle" jdbcType="VARCHAR" />
+    <result column="MIN_SALARY" property="minSalary" jdbcType="DECIMAL" />
+    <result column="MAX_SALARY" property="maxSalary" jdbcType="DECIMAL" />
+  </resultMap>
+  <select id="showAllJobs" resultMap="BaseResultMap"  >
+    select  * from JOBS
+  </select>
+  <select id="showSalary" resultMap="BaseResultMap"  >
+    select   MIN_SALARY,MAX_SALARY from JOBS WHERE JOB_ID = #{jobId}
+  </select>
+  <delete id="deleteJobsById" parameterType="java.lang.String">
+    delete from JOBS where JOB_ID = #{jobId}
+  </delete>
+  <insert id="addJobs" parameterType="com.mwj.bean.Jobs" >
+    insert into JOBS (JOB_ID, JOB_TITLE, MIN_SALARY,MAX_SALARY)
+    values (#{jobId}, #{jobTitle}, #{minSalary},#{maxSalary})
+  </insert>
+  <update id="updateJobsById" parameterType="com.mwj.bean.Jobs" >
+    update JOBS
+      set JOB_TITLE = #{jobTitle,jdbcType=VARCHAR},
+      MIN_SALARY = #{minSalary,jdbcType=DECIMAL},
+      MAX_SALARY = #{maxSalary,jdbcType=DECIMAL}
+      where JOB_ID = #{jobId,jdbcType=VARCHAR}
+  </update>
+  <select id="showAllJobsById" resultMap="BaseResultMap"  >
+    select  * from JOBS WHERE JOB_ID = #{jobId}
+  </select>
+
+</mapper>

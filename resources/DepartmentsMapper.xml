@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mwj.mapper.DepartmentsMapper" >
+  <resultMap id="BaseResultMap" type="com.mwj.bean.Departments" >
+    <id column="DEPARTMENT_ID" property="departmentId" jdbcType="DECIMAL" />
+    <result column="DEPARTMENT_NAME" property="departmentName" jdbcType="VARCHAR" />
+    <result column="LOCATION_NAME" property="locationName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DEPARTMENT_ID, DEPARTMENT_NAME, LOCATION_NAME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Short" >
+    select 
+    <include refid="Base_Column_List" />
+    from DEPARTMENTS
+    where DEPARTMENT_ID = #{departmentId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from DEPARTMENTS
+    where DEPARTMENT_ID = #{departmentId}
+  </delete>
+  <insert id="addDept" parameterType="java.lang.Integer">
+    insert into DEPARTMENTS (DEPARTMENT_ID, DEPARTMENT_NAME, LOCATION_NAME
+      )
+    values (#{departmentId,jdbcType=DECIMAL}, #{departmentName,jdbcType=VARCHAR}, #{locationName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mwj.bean.Departments" >
+    insert into DEPARTMENTS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="departmentId != null" >
+        DEPARTMENT_ID,
+      </if>
+      <if test="departmentName != null" >
+        DEPARTMENT_NAME,
+      </if>
+      <if test="locationName != null" >
+        LOCATION_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=DECIMAL},
+      </if>
+      <if test="departmentName != null" >
+        #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="locationName != null" >
+        #{locationName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mwj.bean.Departments" >
+    update DEPARTMENTS
+    <set >
+      <if test="departmentName != null" >
+        DEPARTMENT_NAME = #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="locationName != null" >
+        LOCATION_NAME = #{locationName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DEPARTMENT_ID = #{departmentId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateDeptById" parameterType="com.mwj.bean.Departments" >
+    UPDATE  DEPARTMENTS SET  DEPARTMENT_NAME = #{departmentName}, LOCATION_NAME = #{locationName} WHERE  DEPARTMENT_ID = #{departmentId}
+  </update>
+  
+  <select id="allDept" resultMap="BaseResultMap">
+
+    SELECT  * FROM  departments
+
+  </select>
+
+  <select id="showDeptById" resultMap="BaseResultMap">
+
+    SELECT  * FROM  departments WHERE  department_Id = #{departmentId}
+
+  </select>
+
+</mapper>
